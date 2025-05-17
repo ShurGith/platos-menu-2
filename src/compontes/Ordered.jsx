@@ -2,6 +2,8 @@ import isEqual from 'lodash/isEqual';
 import { useOrderContext } from "../context/OrderContext";
 import { useTablesContext } from "../context/TablesContext";
 import { useState } from 'react';
+import { Icon } from '@iconify-icon/react';
+import { DateTimeText } from './DataComponent';
 
 function Ordered() {
     const { actualOrder, hayData, totalPay, setOpenModal, removeThisItem, counter,
@@ -12,7 +14,6 @@ function Ordered() {
     const data = actualOrder.sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }))
 
     const [newOrder, setNewOrder] = useState(false);
-
 
 
     function makeOrder() { //Resetea los botones 
@@ -48,7 +49,6 @@ function Ordered() {
 
     function consolea() {
         console.clear()
-        //console.log("seleccionable:", seleccionable)
         console.log("tableActual: ", tableActual)
         console.log("orderCart: ", orderCart)
         console.log("actualOrder: ", actualOrder)
@@ -62,24 +62,23 @@ function Ordered() {
         <div className={`${hayData ? 'lg:absolute lg:top-2 lg:right-0' : ''} w-full bg-white h-fit rounded-xl py-4 relative`}>
             {tableActual && counter > 0 &&
                 <>
-                    <h2 className="text-xl border-b border-rosado-10 ml-6 text-rojo font-siete mb14 ">
-                        Table #: {tableActual}
-                        <span className="text-base font-cinco ml-2">Order Summary</span>
+                <div className="flex items-center justify-between gap-12 px-10">
+                <div className="flex items-center gap-2">
+                        <Icon icon="ic:twotone-table-restaurant" width="42" height="42" /> 
+                    <h2 className="text-xl border-b border-rosado-10 text-rojo font-siete mb14"
+                        onClick={() => consolea()}> {tableActual} -Invoice
                     </h2>
-
-                    <h3 className="ml-18 mt-2 mb-2 text-rojo text-cinco">
-                        Total quantity <span className="font-siete">
-                            ({counter})</span></h3>
+                    </div>
+                        <span className="text-xs text-black/50"> {DateTimeText()}</span>
+                </div>
+                    <h3 className="text-center mt-2 mb-2 text-rojo text-cinco">
+                        Total desserts <span className="font-siete"> ( {counter} )</span></h3>
                 </>
             }
             {hayData &&
                 <div className="flex flex-col gap-4 w-full px-6 lg:p-2">
                     <div id="order-action" className=" flex-col items-center gap-2 mt-2">
                             <>
-                                {actualOrder.length > 0 &&
-                                    <h2 className="text-2xl font-bold text-center"
-                                        onClick={() => consolea()}>Make Action</h2>
-                                }
                                 <div className="grid grid-cols-3 justify-center gap-2 w-full">
                                     <button
                                         onClick={() => makeOrder()}
