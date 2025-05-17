@@ -30,14 +30,14 @@ function CardsContainer() {
                <ModalOrderConfirm option={modalOption} />
             <div className="lg:col-span-4">
                 <h1 className="text-4xl font-siete text-rosado-90 lg:pt-8 pb-4 ">Desserts</h1>
-                <div className="flex flex-wrap items-center py-2 gap-2">
-                  {pendingOrders} tables with pending orders:
+                <div className="flex flex-wrap items-center justify-center  py-2 gap-2 w-full ">
+                    <span className="font-siete underline">{pendingOrders}</span>  table{pendingOrders === 1 ? '' : 's'} with pending orders:
                     {mesas.map((mesa, index) => (
                         <button
                             id={`table-${mesa}`}
                             data-table = {mesa}
                             key={index}
-                            className="cursor-pointer py-1 text-sm font-siete border rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="cursor-pointer px-3 py-1 text-sm font-siete border rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             onClick={() => handleMesaClick(mesa)}>
                             #{mesa}
                         </button>
