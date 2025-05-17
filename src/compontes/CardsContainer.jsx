@@ -16,8 +16,7 @@ function CardsContainer() {
 
 
     const handleMesaClick = (mesa) => {
-        console.log(mesa);
-        
+        document.getElementById('table'+mesa).click()
     };
 
 
@@ -35,13 +34,16 @@ function CardsContainer() {
                   {pendingOrders} tables with pending orders:
                     {mesas.map((mesa, index) => (
                         <button
+                            id={`table-${mesa}`}
+                            data-table = {mesa}
                             key={index}
-                            className="px-3 py-1 text-sm font-siete border rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="cursor-pointer py-1 text-sm font-siete border rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                             onClick={() => handleMesaClick(mesa)}>
                             #{mesa}
                         </button>
                     ))}
-                    </div>                <div className="lg:grid lg:grid-cols-3 w-full">
+                    </div>
+                <div className="lg:grid lg:grid-cols-3 w-full">
                     {salida && salida.map((item, index) => (
                         <Card id={item.id} numberId={index + 1} key={index} item={item} />
                     ))}

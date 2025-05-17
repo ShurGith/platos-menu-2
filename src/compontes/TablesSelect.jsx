@@ -45,14 +45,18 @@ function TablesSelect() {
     function handleTable(clickado, table) { //Activacion de la mesa
         if (!seleccionable) return
         comumAction(true);
-        if (Number(clickado.id) === table.id) {
+        //if (Number(clickado.id )=== table.id) {
             clickado.classList.remove('bg-rosado-50', 'opacity-20')
             clickado.classList.add('border-2', 'bg-rosado-90', 'border-rosado-30', 'border-2')
-        }
+       // }
         setSeleccionable(false)
-        setTableActual(table.id);
+        setTableActual(table);
+            console.log(clickado);
+            console.log(table);
     }
-
+    const clickfather = (mesa)=>{
+        document.getElementById('table'+mesa).click()
+    }
     function consolea() {
         console.clear()
         console.log("seleccionable:", seleccionable)
@@ -69,10 +73,14 @@ function TablesSelect() {
                     Select a Table</h2>
                 <div className=" grid max-w-2xl grid-cols-3 gap-2">
                     {tables.map((table) => (
-                        <button key={table.id} id={table.id} data-type={`table`}
+                        <button key={table.id}
+                                id={`table${table.id}`}
+                                data-type="table"
                             className={`relative text-lg gap-2 flex items-center px-8 py-4 w-fit rounded-md cursor-pointer bg-rosado-50 text-rosado-10`}
-                            onClick={(e) => handleTable(e.target, table)}>
-                            <Icon icon="ic:sharp-table-restaurant" width="24" height="24" />
+                            onClick={(e) => handleTable(e.target, table.id)}>
+                            <Icon icon="ic:sharp-table-restaurant" width="24" height="24"
+                            onClick={()=>{clickfather(table.id)}}
+                            />
                             # {table.id}
                         </button>
                     ))}
