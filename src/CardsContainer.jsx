@@ -1,42 +1,30 @@
 import Cards from "./compontes/Cards";
 import Ordered from "./compontes/Ordered";
 import ModalOrder from "./compontes/modals/ModalOrder";
-import TablesSelect from "./compontes/TablesSelect";
+import TablesBottons from "./compontes/TablesBottons";
 import { useOrderContext } from "./context/OrderContext";
 import ModalOrderConfirm from "./compontes/modals/ModalOrderConfirm";
 import NewModal from "./compontes/modals/newModal";
-import  { useState } from "react";
+import { useState } from "react";
 
 function CardsContainer() {
-  const {orderCart, modalOption } = useOrderContext();
+  const { openModalConfirm, setOpenModalConfirm, orderCart, modalOption } = useOrderContext();
   const [isOpen, setIsOpen] = useState(false);
   const [modalCondition, setModalCondition] = useState('Pedido');
   const pendingOrders = orderCart.length;
 
-  const [isOpenNewModal, setIsOpenNewModal] = useState(false);
+
+
 
   const mesas = [...new Set(orderCart.map(order => order.table))].sort();
-
   const handleMesaClick = (mesa) => {
     document.getElementById('table' + mesa).click()
   };
-function nuevoModal() {
 
-  const toggleModal = () => {
-    setIsOpenNewModal(!isOpenNewModal);
-  };
-
-  return (
-    <div>
-      <button onClick={toggleModal}>Open Modal</button>
-      {isOpenNewModal && <NewModal />}
-    </div>
-  );
-}
 
   return (
     <div className="w-full flex flex-col-reverse lg:grid lg:grid-cols-6 gap-2 px-2 lg:px-18 py-6 overflow-hidden relative">
-    
+
       <div style={{ position: 'absolute', top: '20px', left: '20px' }}>
         <button
           onClick={() => setIsOpen(true)}
@@ -57,7 +45,7 @@ function nuevoModal() {
       </div>
       <ModalOrder />
       {/*   <ModalDeleteConfirm /> */}
-      <ModalOrderConfirm option={modalOption} />
+      {openModalConfirm && <ModalOrderConfirm option={modalOption} setIsOpen={openModalConfirm} />}
       <div className="lg:col-span-4">
         <h1 className="text-4xl font-siete text-rosado-90 lg:pt-8 pb-4 ">Desserts</h1>
         <div className="flex flex-wrap items-center justify-center  py-2 gap-2 w-full ">
@@ -76,7 +64,7 @@ function nuevoModal() {
         <Cards />
       </div>
       <div className="lg:col-span-2 mt-8 h-fit gap-4 flex flex-col relative">
-        <TablesSelect />
+        <TablesBottons />
         <Ordered />
       </div>
     </div>

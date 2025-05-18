@@ -1,67 +1,169 @@
-'use client'
+import {
+  CheckCircleIcon,
+  PencilIcon,
+  CurrencyDollarIcon,
+  QuestionMarkCircleIcon,
+} from "@heroicons/react/24/solid";
 
-import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-import { useOrderContext } from '../../context/OrderContext';
-import { values } from "./ModalSettings";
+import { useOrderContext } from "../../context/OrderContext";
+import { values, generalText } from "./ModalSettings";
+import CountdownTimer from "./CountdownTimer"; // Import the CountdownTimer component
+function ModalOrderConfirm() {
+  const { openModalConfirm, setOpenModalConfirm, modalCondition } =
+    useOrderContext();
+  //if (option === null) return;
 
-function ModalOrderConfirm({ option }) {
-  const { openOrderConfirm, setOpenOrderConfirm, setModalOption } = useOrderContext();
-  if (option === null) return;
+  const COUNTDOWN_SECONDS = 10000;
 
-  const timeToClose = 10000;
+  // Function to close the modal when the timer completes
+  const handleTimerComplete = () => {
+    setOpenModalConfirm(false);
+    console.log("Modal closed automatically after countdown");
+  };
+
+  const {
+    bgColor,
+    color,
+    hoverColor,
+    bgColor2,
+    color2,
+    hoverColor2,
+    Icon,
+    title,
+    text,
+    button1Text,
+    button2Text,
+    button1Action,
+    button2Action,
+  } = values[modalCondition];
 
   const setClose = () => {
-    setModalOption(null);
-    setOpenOrderConfirm(false)
-  }
-  setTimeout(setClose, timeToClose);
+    //setOpenModalConfirm(null);
+    //etOpenModalConfirm(false)
+  };
 
+  /*
+  let Icon, title, text, button1Text, button2Text, bgColor, color, hoverColor, bgColor2, color2, hoverColor2;
+  let button1Action, button2Action;
 
-  const { title, message, colorOne, colorHover, icon } = values[option];
+  const handlePedidoConfirm = () => {
+    alert('Pedido confirmado');
+  };
 
+  const handlePedidoCancel = () => {
+    setOpenModalConfirm(false);
+    console.log('Pedido cancelado 🥶');
+
+  };
+
+  const handleModificarSi = () => {
+    alert('Pedido modificado');
+  };
+
+  const handleModificarNo = () => {
+    alert('No se modificó el pedido');
+  };
+
+  const handleCobrarCobrar = () => {
+    alert('Pedido cobrado');
+  };
+
+  const handleCobrarCancelar = () => {
+    alert('Cobro cancelado');
+  };
+  /*
+    switch (modalCondition) {
+      case 'orderInProgress':
+        bgColor = 'bg-green-600';
+        color = 'text-green-500';
+        hoverColor = 'ext-green-400';
+        bgColor2 = 'bg-green-600';
+        color2 = 'text-green-500';
+        hoverColor2 = 'ext-green-400';
+        Icon = CheckCircleIcon;
+        title = 'Confirmar Pedido';
+        text = '¿Desea confirmar el pedido?';
+        button1Text = 'Cancelar';
+        button2Text = 'Confirmar';
+        button1Action = handlePedidoCancel;
+        button2Action = handlePedidoConfirm;
+        break;
+      case 'updateOrder':
+        bgColor = 'bg-blue-600';
+        color = 'text-blue-500';
+        hoverColor = 'hover:text-blue-200';
+        bgColor2 = 'bg-blue-700';
+        color2 = 'text-blue-500';
+        hoverColor2 = 'hover:text-blue-200';
+        Icon = PencilIcon;
+        title = 'Modificar Pedido';
+        text = '¿Desea modificar el pedido?';
+        button1Text = 'No';
+        button2Text = 'Si';
+        button1Action = handleModificarNo;
+        button2Action = handleModificarSi;
+        break;
+      case 'checkoutOrder':
+        bgColor = 'bg-indigo-600';
+        color = 'text-indigo-500';
+        hoverColor = 'text-indigo-400';
+        Icon = CurrencyDollarIcon;
+        title = 'Cobrar Pedido';
+        text = '¿Desea cobrar el pedido?';
+        button1Text = 'Cancelar';
+        button2Text = 'Cobrar';
+        button1Action = handleCobrarCancelar;
+        button2Action = handleCobrarCobrar;
+        break;
+      default:
+        Icon = QuestionMarkCircleIcon;
+        title = 'Título por defecto';
+        text = 'Texto por defecto';
+        button1Text = 'Botón 1';
+        button2Text = 'Botón 2';
+        break;
+    }
+  */
   return (
-    <Dialog open={openOrderConfirm} onClose={setOpenOrderConfirm} className="relative z-10">
-      <DialogBackdrop
-        transition
-        className="fixed inset-0 bg-gray-500/75 transition-opacity data-closed:opacity-0 data-enter:duration-300 
-        data-enter:ease-out data-leave:duration-200 data-leave:ease-in" />
-      <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-        <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-          <DialogPanel
-            transition
-            className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl 
-            transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out 
-            data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-sm sm:p-6 data-closed:sm:translate-y-0 
-            data-closed:sm:scale-95">
-            <div>
-              <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-green-100">
-                {option && icon}
-              </div>
-              <div className="mt-3 text-center sm:mt-5">
-                <DialogTitle as="h3" className="text-base font-semibold text-gray-900">
-                  {option && title}
-                </DialogTitle>
-                <div className="mt-2">
-                  <p className="text-sm text-gray-500">
-                    {option && message}
-                    This WIndow will close automatically in {timeToClose / 1000} seconds
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="mt-5 sm:mt-6">
-              <button
-                type="button"
-                onClick={() => setClose()}
-                className={`inline-flex w-full justify-center rounded-md ${option && colorOne} px-3 py-2 text-sm font-semibold text-white shadow-xs ${option && colorHover} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:${option && colorOne} cursor-pointer`}>
-                Close This Window
-              </button>
-
-            </div>
-          </DialogPanel>
+    <div className="z-50 fixed top-0 left-0 w-full h-full bg-black/50 bg-opacity-50 flex justify-center items-center">
+      <div className="bg-white rounded-md w-3/4 lg:w-fit lg:min-w-150 flex flex-col justify-between items-center min-h-68 rounded-md">
+        <div
+          className={`w-full h-6 ${bgColor} flex justify-center items-center rounded-t-md`}
+        ></div>
+        <div className="flex justify-center items-center my-6">
+          <Icon className={`size-12 mr-2 ${color}`} />
+          <h2 className={`text-xl font-bold ${color}`}>{title}</h2>
+        </div>
+        <p className="text-xl font-cinco">{text}</p>
+        <p className="text-gray-600/50 mt-6">
+          {generalText.replace("seconds", "")}
+          <CountdownTimer
+            seconds={COUNTDOWN_SECONDS}
+            onComplete={handleTimerComplete}
+            className="font-bold"
+          />{" "}
+          &nbsp;seconds
+        </p>
+        {/*  BUTTONS    */}
+        <div className="flex justify-center gap-6 my-4">
+          <button
+            onClick={button1Action}
+            className={`${bgColor} ${hoverColor} text-white font-bold py-2 px-4 rounded cursor-pointer`}
+          >
+            {button1Text}
+          </button>
+          {button2Text && (
+            <button
+              onClick={button2Action}
+              className={`${bgColor2} ${hoverColor2}  ${color2}  font-bold py-2 px-4 rounded cursor-pointer`}
+            >
+              {button2Text}
+            </button>
+          )}
         </div>
       </div>
-    </Dialog>
-  )
+    </div>
+  );
 }
-export default ModalOrderConfirm
+
+export default ModalOrderConfirm;

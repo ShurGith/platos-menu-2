@@ -6,7 +6,7 @@ import { DateTimeText } from './DataComponent';
 
 function Ordered() {
   const { actualOrder, hayData, totalPay, setOpenModal, removeThisItem, counter,
-    setActualOrder, addOrUpdateOrder, deleteOrder, setModalOption, setOpenOrderConfirm, orderCart } = useOrderContext();
+    setActualOrder, addOrUpdateOrder, deleteOrder, openModalConfirm, setModalCondition, setOpenModalConfirm, orderCart } = useOrderContext();
   const { setTableActual, tableActual } = useTablesContext();
 
   //Ordenar los items pedidos por nombre 
@@ -16,8 +16,8 @@ function Ordered() {
     addOrUpdateOrder(tableActual, actualOrder)
     setActualOrder([])
     setTableActual(null)
-    setOpenOrderConfirm(true)
-    setModalOption('confirm')
+    setOpenModalConfirm(!openModalConfirm)
+    setModalCondition('orderInProgress')
     document.querySelectorAll('[data-type="table"]').forEach((elemento) => {
       elemento.classList.remove('border-2', 'bg-rosado-90', 'border-rosado-30', 'border-2')
     })
@@ -65,6 +65,9 @@ function Ordered() {
                 <img src="assets/images/dining-table.png" alt="table" className="w-8 h-8" />
                 <h2 className="text-xl border-b border-rosado-10 text-rojo font-siete mb14"
                   onClick={() => consolea()}> {tableActual} -Invoice
+                </h2>
+                <h2 className="text-xl border-b border-rosado-10 text-rojo font-siete mb14"
+                  onClick={() => makeOrder()}>  -Pruebas aqui
                 </h2>
               </div>
               <span className="text-xs text-black/50"> {DateTimeText()}</span>

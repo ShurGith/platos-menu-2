@@ -2,7 +2,7 @@ import { useOrderContext } from "../context/OrderContext";
 import { useTablesContext } from "../context/TablesContext";
 import isEqual from 'lodash/isEqual';
 
-function TablesSelect() {
+function TablesBottons() {
   const { tables, setTableActual, tableActual } = useTablesContext();
   const { orderCart, actualOrder } = useOrderContext();
 
@@ -45,7 +45,7 @@ function TablesSelect() {
               data-type="table"
               className={`text-3xl font-cinco flex items-center justify-center gap-2 w-30 h-12 rounded-md cursor-pointer bg-rosado-50 text-rosado-10`}
               onClick={() => handleTable(table.id)}>
-              <img src="assets/images/dining-table.png" alt="table" className="w-8 h-8"
+              <img src="assets/images/table.png" alt="table" className="size-8"
                 onClick={() => { clickfather(table.id) }} />
               {table.id}
             </button>
@@ -57,4 +57,4 @@ function TablesSelect() {
   )
 }
 
-export default TablesSelect
+export default TablesBottons

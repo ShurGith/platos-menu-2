@@ -7,9 +7,9 @@ const OrderContext = createContext();
 export const OrderProvider = ({ children }) => {
     const [counter, setCounter] = useState(0);
     const [openModal, setOpenModal] = useState(false);
-    const [openOrderConfirm, setOpenOrderConfirm] = useState(true)
-    const [modalOption, setModalOption] = useState(null);
+    const [openModalConfirm, setOpenModalConfirm] = useState(false)
     const [actualOrder, setActualOrder] = useState([]);
+    const [modalCondition, setModalCondition] = useState(null);
 
     const [orderCart, setOrderCart] = useState(() => {
         const datosGuardados = localStorage.getItem('cartOrdered');
@@ -51,15 +51,15 @@ export const OrderProvider = ({ children }) => {
                 return updated;
             }
             return [...prevOrders, { table: tableNumber, item }];
-        });        
+        });
     };
-    
+
     // Eliminar todo el pedido de una 
     function deleteOrder(tableNumber) {
         setOrderCart(prevOrders => prevOrders.filter(order => order.table !== tableNumber));
         console.log("Pedido eliminado:", tableNumber);
     }
-    
+
     //Eliminar un item desde la carta
     const removeThisItem = (id) => {
         setActualOrder(prev => prev.filter(item => item.id !== id))
@@ -71,8 +71,8 @@ export const OrderProvider = ({ children }) => {
             counter, setCounter,
             actualOrder, setActualOrder,
             openModal, setOpenModal,
-            modalOption, setModalOption,
-            openOrderConfirm, setOpenOrderConfirm,
+            modalCondition, setModalCondition,
+            openModalConfirm, setOpenModalConfirm,
             hayData, totalItems, totalPay,
             getOrderByTable, removeThisItem,
             addOrUpdateOrder, deleteOrder,

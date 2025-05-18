@@ -1,9 +1,8 @@
 import React from 'react';
 import { CheckCircleIcon, PencilIcon, CurrencyDollarIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/solid'
-import { set } from 'lodash';
 
 const NewModal = ({ condition, setIsOpen }) => {
- 
+
   let Icon, title, text, button1Text, button2Text, bgColor, color, hoverColor, bgColor2, color2, hoverColor2;
 
   const handlePedidoConfirm = () => {
@@ -13,7 +12,7 @@ const NewModal = ({ condition, setIsOpen }) => {
   const handlePedidoCancel = () => {
     setIsOpen(false);
     console.log('Pedido cancelado 🥶');
-    
+
   };
 
   const handleModificarSi = () => {
@@ -36,8 +35,8 @@ const NewModal = ({ condition, setIsOpen }) => {
 
   switch (condition) {
     case 'Pedido':
-      bgColor= 'bg-green-600';
-      color= 'text-green-500';
+      bgColor = 'bg-green-600';
+      color = 'text-green-500';
       hoverColor = 'ext-green-400';
       bgColor2 = 'bg-green-600';
       color2 = 'text-green-500';
@@ -51,12 +50,12 @@ const NewModal = ({ condition, setIsOpen }) => {
       button2Action = handlePedidoConfirm;
       break;
     case 'Modificar':
-      bgColor= 'bg-blue-600';
-      color= 'text-blue-500';
-      hoverColor= 'hover:text-blue-200';
-      bgColor2= 'bg-blue-700';
-      color2= 'text-blue-500';
-      hoverColor2= 'hover:text-blue-200';
+      bgColor = 'bg-blue-600';
+      color = 'text-blue-500';
+      hoverColor = 'hover:text-blue-200';
+      bgColor2 = 'bg-blue-700';
+      color2 = 'text-blue-500';
+      hoverColor2 = 'hover:text-blue-200';
       Icon = PencilIcon;
       title = 'Modificar Pedido';
       text = '¿Desea modificar el pedido?';
@@ -67,8 +66,8 @@ const NewModal = ({ condition, setIsOpen }) => {
       break;
     case 'Cobrar':
       bgColor = 'bg-indigo-600';
-      color= 'text-indigo-500';
-      hoverColor= 'text-indigo-400';
+      color = 'text-indigo-500';
+      hoverColor = 'text-indigo-400';
       Icon = CurrencyDollarIcon;
       title = 'Cobrar Pedido';
       text = '¿Desea cobrar el pedido?';
