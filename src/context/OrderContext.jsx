@@ -9,7 +9,6 @@ export const OrderProvider = ({ children }) => {
     const [openModal, setOpenModal] = useState(false);
     const [openModalConfirm, setOpenModalConfirm] = useState(false)
     const [actualOrder, setActualOrder] = useState([]);
-    const [modalCondition, setModalCondition] = useState(null);
 
     const [orderCart, setOrderCart] = useState(() => {
         const datosGuardados = localStorage.getItem('cartOrdered');
@@ -71,7 +70,6 @@ export const OrderProvider = ({ children }) => {
             counter, setCounter,
             actualOrder, setActualOrder,
             openModal, setOpenModal,
-            modalCondition, setModalCondition,
             openModalConfirm, setOpenModalConfirm,
             hayData, totalItems, totalPay,
             getOrderByTable, removeThisItem,

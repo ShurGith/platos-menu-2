@@ -1,12 +1,7 @@
 "use client";
-
 import { useState } from "react";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, } from "@headlessui/react";
+import CountdownTimer from "./CountdownTimer";
 import { CheckIcon } from "@heroicons/react/24/outline";
 
 export default function Example() {

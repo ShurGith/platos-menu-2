@@ -3,15 +3,8 @@ import { useTablesContext } from "../../context/TablesContext";
 
 function ModalOrder() {
   const {
-    setCounter,
-    actualOrder,
-    openModal,
-    setOpenModal,
-    setOpenOrderConfirm,
-    setActualOrder,
-    totalPay,
-    setModalOption,
-    deleteOrder,
+    setCounter, actualOrder, openModal, setOpenModal,
+    setOpenOrderConfirm, setActualOrder, totalPay, setModalOption, deleteOrder,
   } = useOrderContext();
 
   const { tableActual, setTableActual } = useTablesContext();
@@ -25,20 +18,14 @@ function ModalOrder() {
     setOpenOrderConfirm(true);
     setModalOption("delete");
     document.querySelectorAll('[data-type="table"]').forEach((elemento) => {
-      elemento.classList.remove(
-        "border-2",
-        "bg-rosado-90",
-        "border-rosado-30",
-        "border-2"
-      );
+      elemento.classList.remove("border-2", "bg-rosado-90", "border-rosado-30", "border-2");
     });
   };
 
   return (
     <div
-      className={`${
-        openModal ? "block z-1" : "hidden -z-1"
-      } w-screen h-screen px-2  bg-black/60 fixed flex justify-center items-center `}
+      className={`${openModal ? "block z-1" : "hidden -z-1"
+        } w-screen h-screen px-2  bg-black/60 fixed flex justify-center items-center `}
     >
       <div className="lg:w-1/2 w-full bg-white h-fit mt-4 rounded-xl py-4 lg:px-12">
         <div className="flex flex-col lg:px-5 px-1 py-3 ">

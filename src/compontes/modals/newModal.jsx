@@ -1,8 +1,10 @@
 import React from 'react';
 import { CheckCircleIcon, PencilIcon, CurrencyDollarIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/solid'
+import { useTablesContext } from '../../context/TablesContext';
+
 
 const NewModal = ({ condition, setIsOpen }) => {
-
+  const { tableActual } = useTablesContext();
   let Icon, title, text, button1Text, button2Text, bgColor, color, hoverColor, bgColor2, color2, hoverColor2;
 
   const handlePedidoConfirm = () => {
@@ -24,11 +26,12 @@ const NewModal = ({ condition, setIsOpen }) => {
   };
 
   const handleCobrarCobrar = () => {
-    alert('Pedido cobrado');
+    setIsOpen(false);
   };
 
   const handleCobrarCancelar = () => {
-    alert('Cobro cancelado');
+    console.log('Cobro cancelado');
+    setIsOpen(false);
   };
 
   let button1Action, button2Action;
@@ -53,8 +56,8 @@ const NewModal = ({ condition, setIsOpen }) => {
       bgColor = 'bg-blue-600';
       color = 'text-blue-500';
       hoverColor = 'hover:text-blue-200';
-      bgColor2 = 'bg-blue-700';
       color2 = 'text-blue-500';
+      bgColor2 = 'bg-blue-700';
       hoverColor2 = 'hover:text-blue-200';
       Icon = PencilIcon;
       title = 'Modificar Pedido';
@@ -68,13 +71,16 @@ const NewModal = ({ condition, setIsOpen }) => {
       bgColor = 'bg-indigo-600';
       color = 'text-indigo-500';
       hoverColor = 'text-indigo-400';
-      Icon = CurrencyDollarIcon;
-      title = 'Cobrar Pedido';
+      color2 = 'text-indigo-500';
+      bgColor2 = 'bg-indigo-700';
+      hoverColor2 = 'hover:text-indigo-200';
+      Icon = QuestionMarkCircleIcon;
+      title = 'CheckOut Order Confirmation for Table #' + tableActual;
       text = '¿Desea cobrar el pedido?';
-      button1Text = 'Cancelar';
-      button2Text = 'Cobrar';
-      button1Action = handleCobrarCancelar;
-      button2Action = handleCobrarCobrar;
+      button1Text = 'CheckOut';
+      button2Text = 'Cancel';
+      button1Action = handleCobrarCobrar;
+      button2Action = handleCobrarCancelar;
       break;
     default:
       Icon = QuestionMarkCircleIcon;
@@ -101,6 +107,7 @@ const NewModal = ({ condition, setIsOpen }) => {
         </div>
       </div>
     </div>
+
   );
 };
 

@@ -6,7 +6,9 @@ import {
 } from "@heroicons/react/24/solid";
 
 import { useOrderContext } from "../../context/OrderContext";
+
 import { values, generalText } from "./ModalSettings";
+
 import CountdownTimer from "./CountdownTimer"; // Import the CountdownTimer component
 function ModalOrderConfirm() {
   const { openModalConfirm, setOpenModalConfirm, modalCondition } =
