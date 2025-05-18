@@ -10,6 +10,7 @@ export const OrderProvider = ({ children }) => {
     const [openOrderConfirm, setOpenOrderConfirm] = useState(true)
     const [modalOption, setModalOption] = useState(null);
     const [actualOrder, setActualOrder] = useState([]);
+
     const [orderCart, setOrderCart] = useState(() => {
         const datosGuardados = localStorage.getItem('cartOrdered');
         return datosGuardados ? JSON.parse(datosGuardados) : [];
@@ -21,7 +22,6 @@ export const OrderProvider = ({ children }) => {
             actualOrder.reduce((acc, item) => item.cantidad ? acc + item.cantidad : acc, 0)
         );
     }, [actualOrder, tableActual]);
-
     const hayData = actualOrder && actualOrder.length > 0;
     const totalItems = 1
     const totalPay = hayData && actualOrder.reduce((acc, item) => acc + Number(item.total), 0).toFixed(2);

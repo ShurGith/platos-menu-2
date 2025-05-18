@@ -3,7 +3,7 @@ import { OrderProvider } from "./context/OrderContext"
 import { ProductProvider } from "./context/ProductoContext"
 import { TablesProvider } from "./context/TablesContext"
 
-function Carta() {
+function DesertMenu() {
   return (
     <>
       <TablesProvider>
@@ -17,4 +17,4 @@ function Carta() {
   )
 }
 
-export default Carta
+export default DesertMenu

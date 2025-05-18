@@ -1,7 +1,6 @@
 import isEqual from 'lodash/isEqual';
 import { useOrderContext } from "../context/OrderContext";
 import { useTablesContext } from "../context/TablesContext";
-import { useState } from 'react';
 import { Icon } from '@iconify-icon/react';
 import { DateTimeText } from './DataComponent';
 
@@ -12,9 +11,6 @@ function Ordered() {
 
   //Ordenar los items pedidos por nombre 
   const data = actualOrder.sort((a, b) => a.name.localeCompare(b.name, 'es', { sensitivity: 'base' }))
-
-  const [newOrder, setNewOrder] = useState(false);
-
 
   function makeOrder() { //Resetea los botones 
     addOrUpdateOrder(tableActual, actualOrder)
