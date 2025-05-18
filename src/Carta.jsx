@@ -1,4 +1,4 @@
-import CardsContainer from "./compontes/CardsContainer"
+import CardsContainer from "./CardsContainer"
 import { OrderProvider } from "./context/OrderContext"
 import { ProductProvider } from "./context/ProductoContext"
 import { TablesProvider } from "./context/TablesContext"

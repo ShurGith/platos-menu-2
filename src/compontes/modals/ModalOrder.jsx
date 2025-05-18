@@ -2,36 +2,24 @@ import { useOrderContext } from "../../context/OrderContext";
 import { useTablesContext } from "../../context/TablesContext";
 
 function ModalOrder() {
-    const { orderCart, setCounter, actualOrder, openModal, setOpenModal, setOpenOrderConfirm,setActualOrder,
-        setOrderCart, totalPay, setModalOption } = useOrderContext();
+    const { setCounter, actualOrder, openModal, setOpenModal, setOpenOrderConfirm,setActualOrder,
+         totalPay, setModalOption, deleteOrder } = useOrderContext();
 
-    const { tableActual, setTableActual, setSeleccionable, } = useTablesContext();
-
-    function makeOrder() { //Resetea los botones 
-        document.querySelectorAll('[data-type="table"]').forEach((elemento) => {
-            elemento.classList.remove('border-2', 'bg-rosado-90', 'border-rosado-30', 'border-2', 'opacity-20', 'cursor-not-allowed')
-            elemento.classList.add('cursor-pointer', "bg-rosado-50")
-            document.getElementById('order-action').classList.toggle('hidden')
-        });
-    }
-
+    const { tableActual, setTableActual } = useTablesContext();
 
     const actionModal = () => {
-        const datosFiltrados = orderCart.filter(item => item.table !== tableActual);
-        localStorage.setItem('cartOrdered', JSON.stringify(datosFiltrados));
-        setOrderCart(datosFiltrados);
+        deleteOrder(tableActual)
         setActualOrder([]);
-        setSeleccionable(true)
         setTableActual(null);
         setOpenModal(false);
-        makeOrder();
         setCounter(0);
         setOpenOrderConfirm(true)
         setModalOption('delete')
+        document.querySelectorAll('[data-type="table"]').forEach((elemento) => {
+            elemento.classList.remove('border-2', 'bg-rosado-90', 'border-rosado-30', 'border-2')
+        })
     }
 
-
-    //${ openModal ? 'block z-1' : 'hidden -z-1'} 
     return (
         <div className={`${openModal ? 'block z-1' : 'hidden -z-1'} w-screen h-screen px-2  bg-black/60 fixed flex justify-center items-center `}>
             <div className="lg:w-1/2 w-full bg-white h-fit mt-4 rounded-xl py-4 lg:px-12" >

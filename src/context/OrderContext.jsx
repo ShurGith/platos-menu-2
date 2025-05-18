@@ -10,7 +10,6 @@ export const OrderProvider = ({ children }) => {
     const [openOrderConfirm, setOpenOrderConfirm] = useState(true)
     const [modalOption, setModalOption] = useState(null);
     const [actualOrder, setActualOrder] = useState([]);
-
     const [orderCart, setOrderCart] = useState(() => {
         const datosGuardados = localStorage.getItem('cartOrdered');
         return datosGuardados ? JSON.parse(datosGuardados) : [];
@@ -21,20 +20,17 @@ export const OrderProvider = ({ children }) => {
         setCounter(
             actualOrder.reduce((acc, item) => item.cantidad ? acc + item.cantidad : acc, 0)
         );
-
     }, [actualOrder, tableActual]);
 
     const hayData = actualOrder && actualOrder.length > 0;
     const totalItems = 1
     const totalPay = hayData && actualOrder.reduce((acc, item) => acc + Number(item.total), 0).toFixed(2);
 
-
     // Guardar los pedidos actualizados en localStorage
     useEffect(() => {
         localStorage.setItem("cartOrdered", JSON.stringify(orderCart));
         setCounter(actualOrder.length);
     }, [orderCart]);
-
 
     // Obtener un pedido específico por mesa
     function getOrderByTable(tableNumber) {
@@ -44,13 +40,6 @@ export const OrderProvider = ({ children }) => {
     useEffect(() => {
         setActualOrder(getOrderByTable(tableActual).item || []);
     }, [tableActual]);
-
-
-    // Eliminar un pedido por mesa
-    function deleteOrder(tableNumber) {
-        setOrderCart(prevOrders => prevOrders.filter(order => order.table !== tableNumber));
-        console.log("Pedido eliminado:", tableNumber);
-    }
 
     // Agregar o actualizar un pedido por mesa
     const addOrUpdateOrder = (tableNumber, item) => {
@@ -65,11 +54,16 @@ export const OrderProvider = ({ children }) => {
         });        
     };
     
+    // Eliminar todo el pedido de una 
+    function deleteOrder(tableNumber) {
+        setOrderCart(prevOrders => prevOrders.filter(order => order.table !== tableNumber));
+        console.log("Pedido eliminado:", tableNumber);
+    }
+    
     //Eliminar un item desde la carta
     const removeThisItem = (id) => {
         setActualOrder(prev => prev.filter(item => item.id !== id))
     }
-
 
     return (
         <OrderContext.Provider value={{
@@ -82,7 +76,6 @@ export const OrderProvider = ({ children }) => {
             hayData, totalItems, totalPay,
             getOrderByTable, removeThisItem,
             addOrUpdateOrder, deleteOrder,
-            
         }}>
             {children}
         </OrderContext.Provider>
