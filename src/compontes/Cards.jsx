@@ -8,7 +8,7 @@ function Cards() {
   return (
     <div className="lg:grid lg:grid-cols-3 w-full">
       {salida && salida.map((item, index) => (
-        <div key={index} id={index} clase='cardata' className='w-full gap-4 flex flex-col items-center px-4'>
+        <div key={index} id={index} data-id={index} className='w-full gap-4 flex flex-col items-center px-4'>
           {/*** Image Here ***/}
           <div className='relative' data-clase='imagedata'>
             <img className='w-full rounded-2xl' src={item.image.desktop} alt={item.name} />

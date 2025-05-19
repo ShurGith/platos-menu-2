@@ -41,9 +41,8 @@ function TablesBottons() {
         <div className="grid grid-cols-3 gap-1 ">
           {tables.map((table) => (
             <button key={table.id}
-              id={`table${table.id}`}
-              data-type="table"
-              className={`text-3xl font-cinco flex items-center justify-center gap-2 w-30 h-12 rounded-md cursor-pointer bg-rosado-50 text-rosado-10`}
+              id={`table${table.id}`} data-type="table"
+              className={`text-3xl font-cinco flex items-center justify-around px-4 w-30 h-12 rounded-md cursor-pointer bg-rosado-50 text-rosado-10`}
               onClick={() => handleTable(table.id)}>
               <img src="assets/images/table.png" alt="table" className="size-8"
                 onClick={() => { clickfather(table.id) }} />
