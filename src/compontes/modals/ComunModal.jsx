@@ -5,13 +5,14 @@ import { useOrderContext } from '../../context/OrderContext';
 import CountdownTimer from "./CountdownTimer";
 
 const ComunModal = ({ condition, setIsOpen }) => {
-  const { tableActual, setTableActual, clasesRemoveButtonsTable, actualOrder } = useTablesContext();
-  const { setActualOrder, deleteOrder, addOrUpdateOrder } = useOrderContext();
+  const { tableActual, setTableActual, clasesRemoveButtonsTable } = useTablesContext();
+  const { setActualOrder, deleteOrder, } = useOrderContext();
   let icon, title, text, button1Text, button2Text, bgColor, color, hoverColor, bgColor2, color2, hoverColor2;
-  const COUNTDOWN_SECONDS = 10000;
+  const COUNTDOWN_SECONDS = 10;
   const generalText = "This window will close in ";
+
   const handlePedidoConfirm = () => {
-    alert('Pedido confirmado');
+    setIsOpen(false);
   };
 
   const handleCancel = () => {
@@ -50,11 +51,11 @@ const ComunModal = ({ condition, setIsOpen }) => {
       color2 = 'text-green-500';
       hoverColor2 = 'ext-green-400';
       icon = "material-symbols:order-approve";
-      title = 'Confirmar Pedido';
-      text = '¿Desea confirmar el pedido?';
-      button1Text = 'Confirm';
-      button2Text = 'Cancel';
-      button1Action = handlePedidoConfirm;
+      title = 'The order has been placed.';
+      text = 'Nostrud. Est irure culpa eiusmod aliquip. Mollit ad nostrud irure cupidatat consequat est magna veniam. ';
+      button1Text = 'Okay, let\'s go there.';
+      button2Text = '';
+      button1Action = handlePedidoConfirm; ''
       button2Action = handleCancel;
       break;
     case 'updateorder':
@@ -64,10 +65,10 @@ const ComunModal = ({ condition, setIsOpen }) => {
       color2 = 'text-green-500';
       bgColor2 = 'bg-green-700';
       hoverColor2 = 'hover:bg-green-200';
-      icon = "material-symbols:order-approve";
+      icon = "dashicons:update";
       title = 'The order has been updated';
       text = 'Sit incididunt consequat consectetur duis cillum est nostrud commodo anim. Mollit cillum fugiat proident fugiat. Dolor.';
-      button1Text = 'Okey';
+      button1Text = 'Okay, let\'s go there.';
       button2Text = '';
       button1Action = handleUpdateOrder;
       button2Action = handleCancel;
@@ -104,8 +105,8 @@ const ComunModal = ({ condition, setIsOpen }) => {
       break;
     default:
       icon = "material-symbols:order-approve";
-      title = 'Título por defecto';
-      text = 'Texto por defecto';
+      title = 'Default Title';
+      text = 'Default text';
       button1Text = 'Botón 1';
       button2Text = 'Botón 2';
       break;
@@ -124,7 +125,7 @@ const ComunModal = ({ condition, setIsOpen }) => {
             {generalText}
             <CountdownTimer
               seconds={COUNTDOWN_SECONDS}
-              onComplete={() => { setIsOpen(false) }}
+              onComplete={handleCancel}
               className="font-bold" /> &nbsp;seconds
           </p>
         </div>

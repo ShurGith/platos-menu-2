@@ -67,7 +67,6 @@ export const OrderProvider = ({ children }) => {
             orderCart, setOrderCart,
             counter, setCounter,
             actualOrder, setActualOrder,
-            //  openModal, setOpenModal,
             openModalConfirm, setOpenModalConfirm,
             hayData, totalItems, totalPay,
             getOrderByTable, removeThisItem,

@@ -2,7 +2,7 @@ import isEqual from "lodash/isEqual";
 import { useOrderContext } from "../context/OrderContext";
 import { useTablesContext } from "../context/TablesContext";
 import { DateTimeText } from "./DataComponent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ComunModal from "./modals/ComunModal";
 
 function Ordered() {
@@ -11,26 +11,36 @@ function Ordered() {
 
   const { setTableActual, tableActual, clasesRemoveButtonsTable } = useTablesContext();
   const [isOpen, setIsOpen] = useState(false);
+  const [isOrder, setIsOrder] = useState(false);
+  const [isNewOrder, setIsNewOrder] = useState(false);
   const [modalCondition, setModalCondition] = useState('Pedido');
   //Ordenar los items pedidos por nombre
   const data = actualOrder.sort((a, b) => a.name.localeCompare(b.name, "es", { sensitivity: "base" }));
 
+  const checkIsNewOrder = () => {
+    return orderCart.find((order) => order.table === tableActual) ? false : true;
+  };
+  const checkIsOrder = () => {
+    const findTable = orderCart.find(
+      (order) => order.table === tableActual)?.item;
+    return isEqual(findTable, actualOrder);
+  };
+
+
+
+  useEffect(() => {
+    setIsNewOrder(checkIsNewOrder());
+    setIsOrder(checkIsOrder());
+    setIsNewOrder(checkIsNewOrder())
+  }, [actualOrder, orderCart, tableActual]);
+
+
   function makeOrder() {
     addOrUpdateOrder(tableActual, actualOrder);
     setActualOrder([]);
+    setIsOpen(true)
     setModalCondition('neworder');
     setTableActual(null);
-    clasesRemoveButtonsTable();
-  }
-
-  function goBack() {
-    clasesRemoveButtonsTable();
-    setTableActual(null);
-  }
-
-  function removeOrder() {
-    setIsOpen(true)
-    setModalCondition("removeorder")
     clasesRemoveButtonsTable();
   }
   function updateOrder() {
@@ -38,58 +48,40 @@ function Ordered() {
     setModalCondition("updateorder")
     addOrUpdateOrder(tableActual, actualOrder);
   }
-
+  function goBack() {
+    clasesRemoveButtonsTable();
+    setTableActual(null);
+  }
+  function removeOrder() {
+    setIsOpen(true)
+    setModalCondition("removeorder")
+    clasesRemoveButtonsTable();
+  }
   function checkOutorder() {
     setIsOpen(true)
     setModalCondition("checkoutorder")
   }
-
-  const isNewOrder = () => {
-    return orderCart.find((order) => order.table === tableActual) ? false : true;
-  };
-
-  const isOrder = () => {
-    const findTable = orderCart.find(
-      (order) => order.table === tableActual)?.item;
-    return isEqual(findTable, actualOrder);
-  };
-
-  function consolea() {
-    //  console.clear();
-    console.log("WhichModal: ", whichModal);
-    console.log("tableActual: ", tableActual);
-    console.log("orderCart: ", orderCart);
-    console.log("actualOrder: ", actualOrder);
-    console.log(
-      "Buscamos mesa actual: ",
-      orderCart.find((order) => order.table === tableActual)
-    );
-    console.log("actualOrder: ", actualOrder);
-
-    console.log(
-      "Finding mesa actual: ",
-      orderCart.find((order) => order.table === tableActual)?.item
-    );
-
-
+  const consolear = () => {
+    console.clear();
+    console.log("actualOrder", actualOrder);
+    console.log("orderCart", orderCart);
+    console.log("isNewOrder", isNewOrder);
+    console.log("isOrder", isOrder);
+    console.log("isCheckOut", isCheckOut);
+    console.log("checkIfCheckOut", checkIfCheckOut());
   }
-
   return (
     <>
-
       {isOpen && <ComunModal condition={modalCondition} setIsOpen={setIsOpen} />}
-
       <div
-        className={`${hayData ? "lg:absolute lg:top-2 lg:right-0" : ""
-          } w-full bg-white h-fit rounded-xl py-4 relative`}
-      >
+        className={`${hayData ? "lg:absolute lg:top-2 lg:right-0" : ""} w-full bg-white h-fit rounded-xl py-4 relative`}>
         {tableActual && counter > 0 && (
           <>
             <div className="flex items-center justify-between gap-12 px-10">
               <div className="flex items-center gap-2">
                 <img src="assets/images/dining-table.png" alt="table" className="w-8 h-8" />
                 <h2 className="text-xl border-b border-rosado-10 text-rojo font-siete mb14"
-                  onClick={() => consolea()} >
+                  onClick={() => consolear()}>
                   {tableActual} -Invoice
                 </h2>
               </div>
@@ -108,9 +100,9 @@ function Ordered() {
                 {/*****  //*##### Manoubrer Orders Buttons #### *******/}
                 <div className="grid grid-cols-3 justify-center gap-2 w-full">
                   <button
-                    onClick={isNewOrder() ? makeOrder : updateOrder}
-                    className={`${isOrder() ? "opacity-20 cursor-not-allowed" : "cursor-pointer"} bg-verde px-4 py-2 rounded-md text-rosado-10`}>
-                    {isNewOrder() ? "Make Order" : "Update Order"}
+                    onClick={isNewOrder ? makeOrder : updateOrder}
+                    className={`${isOrder ? "opacity-20 cursor-not-allowed" : "cursor-pointer"} bg-verde px-4 py-2 rounded-md text-rosado-10`}>
+                    {isNewOrder ? "Make Order" : "Update Order"}
                   </button>
 
                   {/*** //*** GoBack orden Button */}
@@ -132,8 +124,8 @@ function Ordered() {
               <div
                 key={item.name}
                 className="flex w-full flex-col font-cuatro border-b text-sm border-rosado-10 py-2">
-                <p className="font-siete">{item.name}</p>
-                <div className="flex items-center justify-between text-rosado-40 ">
+                <p className="font-siete px-2">{item.name}</p>
+                <div className="flex items-center justify-between text-rosado-40 px-4 ">
                   <div className="flex items-center gap-6">
                     <p className="text-rojo font-cinco">{item.cantidad}x</p>
                     <p>@${item.price}</p>
@@ -161,7 +153,7 @@ function Ordered() {
 
             {/* //*** CheckOut orden Button */}
             <button
-              className={`${isNewOrder() ? "opacity-20 cursor-not-allowed" : "cursor-pointer"} bg-rojo text-rosado-10 py-2 rounded-full`}
+              className={`${(!isNewOrder && isOrder) ? "cursor-pointer" : "opacity-20 cursor-not-allowe"} bg-rojo text-rosado-10 py-2 rounded-full`}
               onClick={() => { checkOutorder() }}>
               CheckOut Order
             </button>
