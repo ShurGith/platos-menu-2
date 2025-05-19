@@ -55,7 +55,6 @@ export const OrderProvider = ({ children }) => {
     // Eliminar todo el pedido de una 
     function deleteOrder(tableNumber) {
         setOrderCart(prevOrders => prevOrders.filter(order => order.table !== tableNumber));
-        console.log("Pedido eliminado:", tableNumber);
     }
 
     //Eliminar un item desde la carta

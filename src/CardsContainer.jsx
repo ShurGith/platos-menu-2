@@ -1,6 +1,6 @@
 import Cards from "./compontes/Cards";
 import Ordered from "./compontes/Ordered";
-import ModalOrder from "./compontes/modals/ModalOrder";
+//import ModalOrder from "./compontes/modals/ModalOrder";
 import TablesBottons from "./compontes/TablesBottons";
 import { useOrderContext } from "./context/OrderContext";
 
@@ -17,11 +17,6 @@ function CardsContainer() {
 
   return (
     <div className="w-full flex flex-col-reverse lg:grid lg:grid-cols-6 gap-2 px-2 lg:px-18 py-6 overflow-hidden relative">
-
-
-      <ModalOrder />
-      {/*   <ModalDeleteConfirm />
-      {openModalConfirm && <ModalOrderConfirm option={modalOption} setIsOpen={openModalConfirm} />} */}
       <div className="lg:col-span-4">
         <h1 className="text-4xl font-siete text-rosado-90 lg:pt-8 pb-4 ">Desserts</h1>
         <div className="flex flex-wrap items-center justify-center  py-2 gap-2 w-full ">
