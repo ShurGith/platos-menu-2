@@ -5,8 +5,12 @@ export const TablesProvider = ({ children }) => {
     const [tablesSelect, setTablesSelect] = useState();
     const [table, setTable] = useState();
     const [tableActual, setTableActual] = useState();
+    const clasesRemoveButtonsTable = () => {
+        document.querySelectorAll('[data-type="table"]').forEach((elemento) => {
+            elemento.classList.remove("border-2", "bg-rosado-90", "border-rosado-30", "border-2");
+        });
+    }
 
-    
     const tables = [
         { id: 1, name: 'Table 1' },
         { id: 2, name: 'Table 2' },
@@ -22,9 +26,10 @@ export const TablesProvider = ({ children }) => {
     return (
         <TablesContext.Provider value={{
             tables,
-            tablesSelect,setTablesSelect,
-            table,setTable,
+            tablesSelect, setTablesSelect,
+            table, setTable,
             tableActual, setTableActual,
+            clasesRemoveButtonsTable,
         }}>
             {children}
         </TablesContext.Provider>

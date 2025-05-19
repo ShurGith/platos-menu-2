@@ -1,12 +1,16 @@
-import React from 'react';
+
 import { CheckCircleIcon, PencilIcon, CurrencyDollarIcon, QuestionMarkCircleIcon } from '@heroicons/react/24/solid'
 import { useTablesContext } from '../../context/TablesContext';
+import { useOrderContext } from '../../context/OrderContext';
+import CountdownTimer from "./CountdownTimer";
 
 
 const NewModal = ({ condition, setIsOpen }) => {
-  const { tableActual } = useTablesContext();
+  const { tableActual, setTableActual, clasesRemoveButtonsTable } = useTablesContext();
+  const { setActualOrder, deleteOrder } = useOrderContext();
   let Icon, title, text, button1Text, button2Text, bgColor, color, hoverColor, bgColor2, color2, hoverColor2;
-
+  const COUNTDOWN_SECONDS = 10;
+  const generalText = "This window will close in ";
   const handlePedidoConfirm = () => {
     alert('Pedido confirmado');
   };
@@ -25,8 +29,12 @@ const NewModal = ({ condition, setIsOpen }) => {
     alert('No se modificó el pedido');
   };
 
-  const handleCobrarCobrar = () => {
+  const handleCheckOut = () => {
     setIsOpen(false);
+    clasesRemoveButtonsTable();
+    setTableActual(null);
+    setActualOrder([]);
+    deleteOrder(tableActual);
   };
 
   const handleCobrarCancelar = () => {
@@ -76,10 +84,10 @@ const NewModal = ({ condition, setIsOpen }) => {
       hoverColor2 = 'hover:text-indigo-200';
       Icon = QuestionMarkCircleIcon;
       title = 'CheckOut Order Confirmation for Table #' + tableActual;
-      text = '¿Desea cobrar el pedido?';
+      text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat';
       button1Text = 'CheckOut';
       button2Text = 'Cancel';
-      button1Action = handleCobrarCobrar;
+      button1Action = handleCheckOut;
       button2Action = handleCobrarCancelar;
       break;
     default:
@@ -92,7 +100,7 @@ const NewModal = ({ condition, setIsOpen }) => {
   }
 
   return (
-    <div className="z-50 fixed top-0 left-0 w-full h-full bg-black/50 bg-opacity-50 flex justify-center items-center">
+    <div className="z-50 fixed top-0 left-0 w-full h-full bg-black/90 flex justify-center items-center">
       <div className="bg-white p-4 rounded-md w-3/4 lg:w-1/2 flex-col justify-center items-center">
         <div className="flex justify-center items-center mb-2">
           <Icon className={`size-12 mr-2 ${color}`} />
@@ -100,6 +108,13 @@ const NewModal = ({ condition, setIsOpen }) => {
         </div>
         <div className="mb-4t text-center">
           <p>{text}</p>
+          <p className="text-gray-300 text-xs mb-2 mt-6">
+            {generalText}
+            <CountdownTimer
+              seconds={COUNTDOWN_SECONDS}
+              onComplete={() => { setIsOpen(false) }}
+              className="font-bold" /> &nbsp;seconds
+          </p>
         </div>
         <div className="flex justify-center gap-6">
           <button onClick={button1Action} className={`${bgColor} ${hoverColor} text-white font-bold py-2 px-4 rounded cursor-pointer`}>{button1Text}</button>

@@ -6,7 +6,6 @@ const OrderContext = createContext();
 
 export const OrderProvider = ({ children }) => {
     const [counter, setCounter] = useState(0);
-    const [openModal, setOpenModal] = useState(false);
     const [openModalConfirm, setOpenModalConfirm] = useState(false)
     const [actualOrder, setActualOrder] = useState([]);
 
@@ -69,7 +68,7 @@ export const OrderProvider = ({ children }) => {
             orderCart, setOrderCart,
             counter, setCounter,
             actualOrder, setActualOrder,
-            openModal, setOpenModal,
+            //  openModal, setOpenModal,
             openModalConfirm, setOpenModalConfirm,
             hayData, totalItems, totalPay,
             getOrderByTable, removeThisItem,

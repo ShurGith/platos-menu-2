@@ -1,25 +1,21 @@
 import isEqual from "lodash/isEqual";
 import { useOrderContext } from "../context/OrderContext";
 import { useTablesContext } from "../context/TablesContext";
-import { Icon } from "@iconify-icon/react";
 import { DateTimeText } from "./DataComponent";
 import UpdateOrderModal from "./modals/UpdateOrderModal";
-import RemoveOrerModal from "./modals/RemoveOrderModal";
 import NewOrderModal from "./modals/NewOrderModal";
 import { useState } from "react";
-import PruebaRemove from "./modals/PruebaRemove";
 
 import ModalOrderConfirm from "./modals/ModalOrderConfirm";
 import NewModal from "./modals/newModal";
 
-
 function Ordered() {
   const [whichModal, setWhichModal] = useState(null);
 
-  const { actualOrder, hayData, totalPay, setOpenModal, removeThisItem,
+  const { actualOrder, hayData, totalPay, removeThisItem,
     counter, setActualOrder, addOrUpdateOrder, deleteOrder, orderCart, } = useOrderContext();
-  const { setTableActual, tableActual } = useTablesContext();
-  // const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { setTableActual, tableActual, clasesRemoveButtonsTable } = useTablesContext();
   const [isOpen, setIsOpen] = useState(false);
   const [modalCondition, setModalCondition] = useState('Pedido');
   //Ordenar los items pedidos por nombre
@@ -27,11 +23,7 @@ function Ordered() {
     a.name.localeCompare(b.name, "es", { sensitivity: "base" })
   );
 
-  const clasesRemoveButtonsTable = () => {
-    document.querySelectorAll('[data-type="table"]').forEach((elemento) => {
-      elemento.classList.remove("border-2", "bg-rosado-90", "border-rosado-30", "border-2");
-    });
-  }
+
 
 
   function makeOrder() {
@@ -48,13 +40,10 @@ function Ordered() {
   }
 
   function cancelRemove() {
-    // setWhichModal('remove');
+    //Mover a CheckOut
     setIsOpen(true)
     setModalCondition("Cobrar")
-    //  setActualOrder([]);
-    // setTableActual(null);
     clasesRemoveButtonsTable();
-    // deleteOrder(tableActual);
   }
 
   const isNewOrder = () => {
